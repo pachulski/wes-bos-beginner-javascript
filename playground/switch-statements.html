@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="../base.css">
+</head>
+
+
+<body>
+  <img width="200" src="./turtle.png" alt="Turt" class="turt">
+  <style>
+    .turt {
+      position: relative;
+      --x: 0;
+      --y: 0;
+      --flip: 0;
+      --rotate: 0;
+      transform: translateX(var(--x)) translateY(var(--y)) rotateY(var(--flip)) rotate(var(--rotate));
+      transition: transform 0.2s;
+    }
+  </style>
+
+  <script>
+    const turt = document.querySelector('.turt');
+    let x = 0;
+    let y = 0;
+    const speed = 10;
+    let flipped = false;
+    let rotate = 0;
+    function handleClick(event) {
+      if (!event.key.includes('Arrow')) { return; }
+      switch (event.key) {
+        case 'ArrowUp':
+          rotate = -90;
+          y -= 1;
+          break;
+        case 'ArrowRight':
+          rotate = 0;
+          x += 1;
+          flipped = false;
+          break;
+        case 'ArrowDown':
+          rotate = 90;
+          y += 1;
+          break;
+        case 'ArrowLeft':
+          rotate = 0;
+          x -= 1;
+          flipped = true;
+          break;
+        default:
+          break;
+      }
+      turt.setAttribute('style', `
+        --flip: ${flipped ? '180deg' : '0'};
+        --x: ${x * speed}px;
+        --y: ${y * speed}px;
+        --rotate: ${rotate}deg;
+      `)      
+    }
+    window.addEventListener('keydown', handleClick);
+  </script>
+
+</body>
+
+</html>
